@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
         // Clamp the new Y position to stay within the limits
         newYPosition = Mathf.Clamp(newYPosition, yLimitLower, yLimitUpper);
         transform.position = new Vector3(newXPosition, newYPosition, 0);
-
+        transform.rotation = Quaternion.identity; // Reset rotation to avoid tilting
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -57,4 +57,5 @@ public class Player : MonoBehaviour
             Destroy(gameObject); // Destroy the player object on collision with an enemy
         }
     }
+
 }

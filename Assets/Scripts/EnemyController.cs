@@ -9,6 +9,8 @@ public class EnemyController : MonoBehaviour
 
     GameManager gameManager; // Reference to the GameManager to access the list of enemies
     public GameObject explosion; // Reference to the explosion prefab (not used in this code, but can be used for visual effects)
+    public GameObject star; // Reference to the star prefab (not used in this code, but can be used for visual effects)
+    float chanceToDropStar = 0.1f; // Chance to drop a star when the enemy is destroyed
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,6 +46,12 @@ public class EnemyController : MonoBehaviour
             }
             gameManager.AddScore(1); // Add score to the GameManager
             Instantiate(explosion, transform.position, Quaternion.identity); // Instantiate the explosion effect at the enemy's position
+            // Check if a star should be dropped
+            if (Random.value <= chanceToDropStar) // Randomly decide whether to drop a star based on the defined chance
+            {
+                GameObject s = Instantiate(star, transform.position, Quaternion.identity); // Instantiate the star at the enemy's position
+                s.GetComponent<Rigidbody2D>().linearVelocity = new Vector3(0f, -1f, 0f); // Set the star's velocity to move downwards
+            }
             Destroy(gameObject); // Destroy the enemy
         }
     }
