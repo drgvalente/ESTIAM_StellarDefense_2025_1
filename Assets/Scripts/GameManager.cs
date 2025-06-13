@@ -51,6 +51,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (enemies.Count == 0) // Check if there are no enemies left
+        {
+            Invoke("Victory", 2f); // Call the Victory method if all enemies are defeated
+            return; // Exit the Update method
+        }
+
         foreach (GameObject enemy in enemies) // Iterate through each enemy in the list
         {
             if (enemy != null) // Check if the enemy is not destroyed
@@ -94,7 +100,7 @@ public class GameManager : MonoBehaviour
 
         if (playerLives <= 0)
         {
-            GameOver(); // Call the GameOver method if lives reach zero
+            Invoke("GameOver", 2f); // Call the GameOver method if lives reach zero
         }
         else
         {
@@ -105,11 +111,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        // Implement game over logic here, such as showing a game over screen or restarting the game
-        isGameOver = true; // Set the game over flag to true
-        gameOverText.text = "GAME OVER"; // Update the UI text to display the game over message
-        Invoke("RestartGame", 2f); // Call the RestartGame method after a delay of 2 seconds
-        
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
     }
 
     public void RestartGame()
@@ -123,5 +125,10 @@ public class GameManager : MonoBehaviour
         // Implement player respawn logic here, such as instantiating a new player object at the starting position
         // For example:
         Instantiate(playerPrefab, playerStartPosition, Quaternion.identity);
+    }
+
+    public void Victory()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Victory");
     }
 }

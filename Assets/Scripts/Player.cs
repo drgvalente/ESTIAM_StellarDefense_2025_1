@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     float yLimitLower = -5f; // Vertical boundary limit
 
     GameManager gameManager; // Reference to the GameManager to access the list of enemies
+    public GameObject explosion; // Reference to the explosion prefab (not used in this code, but can be used for visual effects)
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -52,6 +53,7 @@ public class Player : MonoBehaviour
             // Handle collision with enemy
             // You can add logic here to handle player damage or game over
             gameManager.RemoveLife(); // Call the RemoveLife method from GameManager
+            Instantiate(explosion, transform.position, Quaternion.identity); // Instantiate the explosion effect at the player's position
             Destroy(gameObject); // Destroy the player object on collision with an enemy
         }
     }
